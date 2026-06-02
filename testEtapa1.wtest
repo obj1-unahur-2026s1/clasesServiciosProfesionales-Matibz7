@@ -1,0 +1,40 @@
+import universidades.*
+import profesionales.*
+import empresa.*
+
+describe "test de servicio profesionales" {
+
+const sanMartin=new universidad(provincia="Buenos Aires",honorariosRecomendados=3500)
+const rosario= new universidad(provincia="Santa Fe", honorariosRecomendados=2800)
+const corrientes=new universidad(provincia="Corrientes", honorariosRecomendados=4800)
+const hurlingham=new universidad(provincia="Buenos Aires",honorariosRecomendados=8800)
+
+const juana=new profesionalVinculado(universidad=rosario)
+const melina=new profesionalVinculado(universidad=corrientes)
+
+const rocio=new profesionalLibre(
+  universidad=hurlingham,
+  honorariosPorHora=5000,
+  provinciasDondePuedeTrabajar=["Santa Fe", "Cordoba", "Buenos Aires"]
+)
+const luciana =new profesionalLibre(
+  universidad=rosario,
+  honorariosPorHora=3200,
+  provinciasDondePuedeTrabajar=["Santa Fe","Entre Rios"]
+)
+const empresa=new Empresa(honorarioDeReferencia=3500)
+
+method initialize(){
+  empresa.contratar(juana)
+  empresa.contratar(melina)
+  empresa.contratar(rocio)
+  empresa.contratar(luciana)
+}
+test "validaciones estadisticas de la empresa"{
+  assert.equals(2, empresa.cuantosEstudiaronEn(rosario))
+  assert.equals(1, empresa.cuantosEstudiaronEn(hurlingham))
+  assert.equals(0, empresa.cuantosEstudiaronEn(sanMartin))
+
+
+}
+}
